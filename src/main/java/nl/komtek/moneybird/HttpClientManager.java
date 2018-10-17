@@ -40,14 +40,6 @@ public class HttpClientManager {
 		return client;
 	}
 
-//	public static Response postHttp(String url, JsonObject params, List<NameValuePair> headers) throws IOException {
-//		HttpPost request = new HttpPost(url);
-//		List<NameValuePair> p2 = new ArrayList<>();
-//		p2.add(new BasicNameValuePair("contact", params.toString()));
-//		request.setEntity(new UrlEncodedFormEntity(p2, Consts.UTF_8));
-//		return request(request, headers);
-//	}
-
 	public static Response postHttp(String url, JsonObject params, List<NameValuePair> headers) throws IOException {
 		HttpPost request = new HttpPost(url);
 		request.setEntity(new StringEntity(params.toString(), ContentType.APPLICATION_JSON));
@@ -87,6 +79,10 @@ public class HttpClientManager {
 		int responseCode = response.getStatusLine().getStatusCode();
 
 		HttpEntity entity = response.getEntity();
-		return new Response(responseCode, Optional.ofNullable(EntityUtils.toString(entity)));
+		Optional<String> result = Optional.empty();
+		if (entity != null) {
+			result = Optional.ofNullable(EntityUtils.toString(entity));
+		}
+		return new Response(responseCode, result);
 	}
 }
