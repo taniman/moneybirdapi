@@ -33,6 +33,11 @@ public class MoneybirdClient {
 		return HttpClientManager.getHttp(url, headers);
 	}
 
+	public Response get(String path, String params) throws Exception {
+		String url = String.format("%s/%s.%s?%s", baseUrl, path, format, params);
+		return HttpClientManager.getHttp(url, headers);
+	}
+
 	public Response post(String path, JsonObject params) throws Exception {
 		String url = String.format("%s/%s.%s", baseUrl, path, format);
 		return HttpClientManager.postHttp(url, params, headers);
