@@ -40,6 +40,16 @@ public class HttpClientManager {
 		return client;
 	}
 
+	public static void resetTimeOut(int seconds) {
+		client = HttpClientBuilder.create().
+				setDefaultRequestConfig(RequestConfig.custom()
+						.setConnectTimeout(seconds * 1000)
+						.setConnectionRequestTimeout(seconds * 1000)
+						.setSocketTimeout(seconds * 1000)
+						.build())
+				.build();
+	}
+
 	public static Response postHttp(String url, JsonObject params, List<NameValuePair> headers) throws IOException {
 		HttpPost request = new HttpPost(url);
 		request.setEntity(new StringEntity(params.toString(), ContentType.APPLICATION_JSON));
